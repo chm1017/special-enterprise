@@ -12,9 +12,9 @@ mybatis:
     type-aliases-package: com.cm.special_enterprise.pojo
     mapper-locations: classpath:mapper/*.xml
 
-elasticsearch: # ES??
+elasticsearch:
     rest:
-        uris: http://192.168.0.163:9200
+        uris: http://192.168.0.95:29200
         connection-timeout: 60s
         read-timeout: 2000s
 

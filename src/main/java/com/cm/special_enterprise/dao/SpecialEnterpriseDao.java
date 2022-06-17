@@ -1,0 +1,9 @@
+package com.cm.special_enterprise.dao;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cm.special_enterprise.pojo.SpecialEnterprise;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface SpecialEnterpriseDao extends BaseMapper<SpecialEnterprise> {
+}
