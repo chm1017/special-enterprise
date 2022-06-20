@@ -13,6 +13,7 @@ import com.cm.special_enterprise.service.DemoService;
 
 
 import org.apache.poi.ss.usermodel.Workbook;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -53,40 +54,46 @@ public class DemoServiceImpl implements DemoService {
             for (String sheetName:sheetNames) {
                 List<DemoEntity> list = EasyExcel.read(file.getInputStream()).sheet(sheetName).head(DemoEntity.class).doReadSync();
                 for (DemoEntity demoEntity:list) {
-                    NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
-                    queryBuilder.withQuery(QueryBuilders.termQuery("name.keyword", demoEntity.getName()));
-                    SearchHits<EnterpriseBaseIndex> searchHits = elasticsearchRestTemplate.search(queryBuilder.build(), EnterpriseBaseIndex.class);
-                    if (searchHits.getTotalHits() == 0) {
-                        queryBuilder.withQuery(QueryBuilders.termQuery("oldName", demoEntity.getName()));
-                        searchHits = elasticsearchRestTemplate.search(queryBuilder.build(), EnterpriseBaseIndex.class);
+                    if (demoEntity.getName() != null) {
+                        NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
+                        queryBuilder.withQuery(QueryBuilders.termQuery("name.keyword", demoEntity.getName().replace((char)12288,' ').trim()));
+                        SearchHits<EnterpriseBaseIndex> searchHits = elasticsearchRestTemplate.search(queryBuilder.build(), EnterpriseBaseIndex.class);
+                        if (searchHits.getTotalHits() == 0|| searchHits == null) {
+                            queryBuilder.withQuery(QueryBuilders.termQuery("oldName", demoEntity.getName().replace((char)12288,' ').trim()));
+                            searchHits = elasticsearchRestTemplate.search(queryBuilder.build(), EnterpriseBaseIndex.class);
+                        }
+                        if (searchHits.getTotalHits() == 0) {
+                            System.out.println(demoEntity.getName().replace((char)12288,' ').trim());
+                            demoEntities.add(demoEntity);
+                        }
+                        if (searchHits.getTotalHits() == 1) {
+                            searchHits.getSearchHits().forEach(e->{
+                                SpecialEnterprise enterprise1 = specialEnterpriseDao.selectByName(demoEntity.getName().replace((char) 12288, ' ').trim());
+                                SpecialEnterprise enterprise2 = specialEnterpriseDao.selectByCode(e.getContent().getCode());
+                                if (enterprise1==null&&enterprise2==null) {
+                                    SpecialEnterprise specialEnterprise = new SpecialEnterprise();
+                                    specialEnterprise.setCode(e.getContent().getCode());
+                                    specialEnterprise.setArea_id(e.getContent().getAreaId());
+                                    specialEnterprise.setCity_id(e.getContent().getCityId());
+                                    specialEnterprise.setProvince_id(e.getContent().getProvinceId());
+                                    specialEnterprise.setStreet_id(e.getContent().getStreetId());
+                                    specialEnterprise.setLevel(demoEntity.getLevel());
+                                    specialEnterprise.setYear(Integer.parseInt(sheetName.substring(0, 4)));
+                                    specialEnterprise.setName(demoEntity.getName().replace((char) 12288, ' ').trim());
+                                    specialEnterprise.setHat_name("专精特新中小型企业");
+                                    specialEnterprise.setCreate_time(new Date());
+                                    specialEnterpriseDao.insert(specialEnterprise);
+                                }
+                            });
+                        }
+
                     }
-                    if (searchHits.getTotalHits() == 0) {
-                        System.out.println(demoEntity.getName());
-                        demoEntities.add(demoEntity);
-                    }
-                    if (searchHits.getTotalHits() == 1) {
-                        searchHits.getSearchHits().forEach(e->{
-                            SpecialEnterprise specialEnterprise = new SpecialEnterprise();
-                            specialEnterprise.setCode(e.getContent().getCode());
-                            specialEnterprise.setArea_id(e.getContent().getAreaId());
-                            specialEnterprise.setCity_id(e.getContent().getCityId());
-                            specialEnterprise.setProvince_id(e.getContent().getProvinceId());
-                            specialEnterprise.setStreet_id(e.getContent().getStreetId());
-                            specialEnterprise.setLevel(demoEntity.getLevel());
-                            specialEnterprise.setYear(Integer.parseInt(sheetName));
-                            specialEnterprise.setName(demoEntity.getName());
-                            specialEnterprise.setHat_name("专精特新中小型企业");
-                            specialEnterprise.setCreate_time(new Date());
-                            specialEnterpriseDao.insert(specialEnterprise);
-                        });
-                    }
+
                 }
             }
-
         }
         System.out.println("======="+demoEntities.toString());
-
-        EasyExcel.write("C:\\Users\\admin\\Desktop\\444.xlsx", DemoEntity.class).sheet("企业信息").doWrite(demoEntities);
+        EasyExcel.write("C:\\Users\\admin\\Desktop\\555.xlsx", DemoEntity.class).sheet("企业信息").doWrite(demoEntities);
         return true;
     }
 

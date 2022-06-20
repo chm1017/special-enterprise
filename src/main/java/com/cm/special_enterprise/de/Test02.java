@@ -10,13 +10,16 @@ public class Test02 {
 
 
     public static void main(String[] args) {
+
+        String year = "2021年";
+        System.out.println(year.substring(0, 4));
+
         DemoEntity demoEntity = new DemoEntity();
         demoEntity.setName("66666");
         demoEntity.setLevel("市级");
         ArrayList<DemoEntity> DEMO_ENTITIES = new ArrayList<>();
         DEMO_ENTITIES.add(demoEntity);
         EasyExcel.write("C:\\Users\\admin\\Desktop\\444.xlsx", DemoEntity.class).sheet("企业信息").doWrite(DEMO_ENTITIES);
-
     }
 }
 
