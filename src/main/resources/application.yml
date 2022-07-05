@@ -14,9 +14,10 @@ mybatis:
 
 elasticsearch:
     rest:
-        uris: http://192.168.0.95:29200
+        uris: http://121.37.230.190:9200
         connection-timeout: 60s
-        read-timeout: 2000s
-
+        read-timeout: 1200s
+        password: Boshikeji2021##*
+        username: elastic
 
 

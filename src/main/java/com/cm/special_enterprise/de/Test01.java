@@ -11,7 +11,7 @@ public class Test01 {
     public static void main(String[] args) {
 
         String filePath = "C:\\Users\\admin\\Desktop\\6666.xlsx";
-        List<DemoEntity> list = EasyExcel.read(filePath).head(DemoEntity.class).sheet().doReadSync();
+        List<DemoEntity> list = EasyExcel.read(filePath).head(DemoEntity.class).headRowNumber(2).sheet().doReadSync();
         for (DemoEntity demoEntity : list) {
             System.out.println(demoEntity);
         }

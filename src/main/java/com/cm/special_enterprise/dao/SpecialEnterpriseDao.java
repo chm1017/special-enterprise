@@ -13,4 +13,5 @@ public interface SpecialEnterpriseDao extends BaseMapper<SpecialEnterprise> {
 
     @Select("select * from d_special_enterprise6 where code = #{code}")
     SpecialEnterprise selectByCode(String code);
+
 }
