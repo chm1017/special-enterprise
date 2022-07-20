@@ -1,12 +1,11 @@
 server:
     port: 8080
-spring:
-    datasource:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        username: root
-        password: 123456
-        url: jdbc:mysql://192.168.0.95:23306/enterprise-platform?serverTimezone=UTC&userUnicode=true&characterEncoding=utf-8
-        type: com.alibaba.druid.pool.DruidDataSource
+datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://rm-wz90iqp704299r20fno.mysql.rds.aliyuncs.com/quchuang_zhengshi?zeroDateTimeBehavior=CONVERT_TO_NULL&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+    username: boshi
+    password: Boshikeji2020##*
+    type: com.alibaba.druid.pool.DruidDataSource
 
 mybatis:
     type-aliases-package: com.cm.special_enterprise.pojo
@@ -14,10 +13,10 @@ mybatis:
 
 elasticsearch:
     rest:
-        uris: http://121.37.230.190:9200
+        uris: http://192.168.0.95:29200
         connection-timeout: 60s
-        read-timeout: 1200s
-        password: Boshikeji2021##*
-        username: elastic
+#        read-timeout: 1200s
+#        password: boshikeji
+#        username: elastic
 
 
