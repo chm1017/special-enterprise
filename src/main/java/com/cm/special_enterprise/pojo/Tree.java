@@ -8,6 +8,10 @@ import java.util.List;
 public class Tree {
 
     private String label;
+    private Tree left;
+    private Tree right;
+
+
 
     private List<Tree> children;
 

@@ -1,6 +1,8 @@
 package com.cm.special_enterprise.pojo;
 
-public class TestEntity {
+import java.io.Serializable;
+
+public class TestEntity implements Serializable {
     private String name;
     private String age;
     private String sex;

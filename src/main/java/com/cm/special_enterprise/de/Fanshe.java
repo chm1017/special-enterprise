@@ -26,6 +26,8 @@ public class Fanshe {
         return t;
     }
 
+
+
     public static void main(String[] args) throws Exception {
         List<String> strings = new ArrayList<>();
         strings.add("111");
@@ -37,6 +39,14 @@ public class Fanshe {
         TestEntity simpleDictionaryEntity = setParam(TestEntity.class, split);
         System.out.println(simpleDictionaryEntity.getAge());
         System.out.println(simpleDictionaryEntity.toString());
+
+        TestEntity testEntity = new TestEntity();
+        Class a = testEntity.getClass();
+        System.out.println(a);
+        Class b = TestEntity.class;
+        System.out.println(a == b);
+        Class c = Class.forName("com.cm.special_enterprise.pojo.TestEntity");
+        System.out.println(b==c);
 
     }
 }

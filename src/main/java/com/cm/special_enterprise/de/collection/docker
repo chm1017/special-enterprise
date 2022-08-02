@@ -1,0 +1,15 @@
+collection
+    list
+        arraylist
+        linklist
+        vector
+
+    set
+        hashset
+        treeset
+
+
+map
+    hashmap
+    hashtable
+    treemap
