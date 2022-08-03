@@ -6,5 +6,6 @@ public class Test05 {
         System.out.println(a.substring(0, 4));
         System.out.println(a.substring(4, 6));
 
+
     }
 }
