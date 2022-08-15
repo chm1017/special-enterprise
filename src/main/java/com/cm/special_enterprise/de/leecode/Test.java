@@ -13,8 +13,9 @@ public class Test {
         node2.next = node3;
         node3.next = node4;
         node4.next = node5;
+
 //        System.out.println(reverse(node1));
-        System.out.println(betweenReverse(node1, 2, 4));
+        System.out.println(Test02(node1, 2, 4));
 
     }
 
@@ -48,4 +49,36 @@ public class Test {
         }
         return dummyNode.next;
     }
+
+    public void Test01(ListNode head) {
+        ListNode pre = null;
+        ListNode cur = head;
+        while (cur != null) {
+            ListNode cur_next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = cur_next;
+        }
+        return;//pre
+    }
+
+    public static ListNode Test02(ListNode head, int m, int n) {
+        ListNode dummyNode = new ListNode(-1);
+        dummyNode.next = head;
+        ListNode pre = dummyNode;
+        for (int i = 0; i < m-1; i++) {
+            pre = pre.next;
+        }
+        ListNode cur = pre.next;
+        ListNode cur_next;
+        for (int i = 0; i < n-m; i++) {
+            cur_next = cur.next;
+            cur.next = cur_next.next;
+            cur_next.next = pre.next;
+            pre.next = cur_next;
+        }
+
+        return dummyNode.next;
+    }
+
 }

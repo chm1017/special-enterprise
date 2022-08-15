@@ -1,8 +1,5 @@
 package com.cm.special_enterprise.de.leecode;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Stack;
 
 public class Leecode {
@@ -17,7 +14,7 @@ public class Leecode {
         node2.next = node3;
         node3.next = node4;
         node4.next = node5;
-        System.out.println(reverseBetween(node1, 2, 4));
+        System.out.println(reverse2(node1));
     }
 
     public static ListNode reverseList(ListNode head) {
@@ -41,7 +38,7 @@ public class Leecode {
     }
 
 
-    public static void reverse2(ListNode head) {
+    public static ListNode reverse2(ListNode head) {
         ListNode pre = null;
         ListNode cur = head;
         while (cur != null) {
@@ -50,6 +47,7 @@ public class Leecode {
             pre = cur;
             cur = cur_next;
         }
+        return pre;
     }
 
     public static ListNode reverseBetween(ListNode head, int m, int n) {

@@ -22,6 +22,5 @@ public class Test_Extend {
 
     protected void run() {
         System.out.println("跑");
-
     }
 }
