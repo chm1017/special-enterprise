@@ -2,9 +2,7 @@ package com.cm.special_enterprise.de.leecode;
 
 import com.alibaba.druid.sql.visitor.functions.Char;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class C8_15 {
     class Solution {
@@ -145,4 +143,114 @@ public class C8_15 {
     }
 
 
+
+        public int threeSumClosest(int[] nums, int target) {
+            Arrays.sort(nums);
+            int n = nums.length;
+            int best = 10000000;
+
+            // 枚举 a
+            for (int i = 0; i < n; ++i) {
+                // 保证和上一次枚举的元素不相等
+                if (i > 0 && nums[i] == nums[i - 1]) {
+                    continue;
+                }
+                // 使用双指针枚举 b 和 c
+                int j = i + 1, k = n - 1;
+                while (j < k) {
+                    int sum = nums[i] + nums[j] + nums[k];
+                    // 如果和为 target 直接返回答案
+                    if (sum == target) {
+                        return target;
+                    }
+                    // 根据差值的绝对值来更新答案
+                    if (Math.abs(sum - target) < Math.abs(best - target)) {
+                        best = sum;
+                    }
+                    if (sum > target) {
+                        // 如果和大于 target，移动 c 对应的指针
+                        int k0 = k - 1;
+                        // 移动到下一个不相等的元素
+                        while (j < k0 && nums[k0] == nums[k]) {
+                            --k0;
+                        }
+                        k = k0;
+                    } else {
+                        // 如果和小于 target，移动 b 对应的指针
+                        int j0 = j + 1;
+                        // 移动到下一个不相等的元素
+                        while (j0 < k && nums[j0] == nums[j]) {
+                            ++j0;
+                        }
+                        j = j0;
+                    }
+                }
+            }
+            return best;
+        }
+
+    public static void main(String[] args) {
+        int[] a = new int[]{1, 2, 3};
+
+        System.out.println(permute(a));
+    }
+
+
+        public static List<String> letterCombinations(String digits) {
+            List<String> combinations = new ArrayList<String>();
+            if (digits.length() == 0) {
+                return combinations;
+            }
+            Map<Character, String> phoneMap = new HashMap<Character, String>() {{
+                put('2', "abc");
+                put('3', "def");
+                put('4', "ghi");
+                put('5', "jkl");
+                put('6', "mno");
+                put('7', "pqrs");
+                put('8', "tuv");
+                put('9', "wxyz");
+            }};
+
+            backtrack(combinations, phoneMap, digits, 0, new StringBuffer());
+            return combinations;
+        }
+
+        public static void backtrack(List<String> combinations, Map<Character, String> phoneMap, String digits, int index, StringBuffer combination) {
+            if (index == digits.length()) {
+                combinations.add(combination.toString());
+            } else {
+                char digit = digits.charAt(index);
+                String letters = phoneMap.get(digit);
+                int lettersCount = letters.length();
+                for (int i = 0; i < lettersCount; i++) {
+                    combination.append(letters.charAt(i));
+                    backtrack(combinations, phoneMap, digits, index + 1, combination);
+                    combination.deleteCharAt(index);
+                }
+            }
+        }
+
+
+        public static List<List<Integer>> permute(int[] nums) {
+            List<List<Integer>> res = new ArrayList<>();
+            int[] visited = new int[nums.length];
+            backtrack(res, nums, new ArrayList<Integer>(), visited);
+            return res;
+        }
+
+        private static void backtrack(List<List<Integer>> res, int[] nums, ArrayList<Integer> tmp, int[] visited) {
+            if (tmp.size() == nums.length) {
+                res.add(new ArrayList<>(tmp));
+                return;
+            }
+            for (int i = 0; i < nums.length; i++) {
+                if (visited[i] == 1) continue;
+                visited[i] = 1;
+                tmp.add(nums[i]);
+                backtrack(res, nums, tmp, visited);
+                visited[i] = 0;
+                tmp.remove(tmp.size() - 1);
+            }
+        }
 }

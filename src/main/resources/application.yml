@@ -24,9 +24,9 @@ spring:
         name: eureka-server
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://192.168.0.163:3306/jdbc2?zeroDateTimeBehavior=CONVERT_TO_NULL&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+        url: jdbc:mysql://192.168.0.24:3306/datacenter-biz?zeroDateTimeBehavior=CONVERT_TO_NULL&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
         username: root
-        password: Boshi@2021
+        password: Boshi@888
 eureka:
     client:
         register-with-eureka: false

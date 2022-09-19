@@ -1,28 +1,45 @@
 package com.cm.special_enterprise.de.leecode;
 
 import cn.hutool.core.net.Ipv4Util;
+import com.alibaba.druid.sql.visitor.functions.Char;
+import com.cm.special_enterprise.de.Test01;
 import com.cm.special_enterprise.de.leecode.ListNode;
 
-import java.util.ArrayList;
-import java.util.PriorityQueue;
-import java.util.Stack;
+import java.util.*;
 
 public class LinkTest {
     public static void main(String[] args) {
         ListNode head = new ListNode(0);
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(2);
-        ListNode node3 = new ListNode(3);
+        ListNode node3 = new ListNode(2);
         ListNode node4 = new ListNode(4);
         head.next = node1;
         node1.next = node2;
         node2.next = node3;
         node3.next = node4;
 //        System.out.println(reverseBetween(head, 2, 3));
-
-        System.out.println(delNode(head, 6));
+//        System.out.println(delNode(head, 6));
+        System.out.println(removeElements(head, 2));
 
     }
+
+    public static ListNode removeElements(ListNode head, int val) {
+        ListNode dummyNode = new ListNode();
+        dummyNode.next = head;
+        ListNode pre = dummyNode;
+        ListNode cur = pre.next;
+        while (cur != null) {
+            if (cur.val == val) {
+                pre.next = cur.next;
+            } else {
+                pre = pre.next;
+            }
+            cur = cur.next;
+        }
+        return dummyNode.next;
+    }
+
     public static ListNode reverseLinkList(ListNode head) {
         ListNode pre = null;
         ListNode cur = head;
@@ -188,13 +205,68 @@ public class LinkTest {
 
     }
 
+    public int countPrimes(int n) {
+        int ans = 0;
+        for (int i = 2; i <n; i++) {
+            if (isPrimes(i)) {
+                ans++;
+            }
+        }
+        return ans;
 
+    }
 
+    public boolean isPrimes(int x) {
+        for (int i = 2; i *i<=x ; i++) {
+            if (x % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    public boolean isIsomorphic(String s, String t) {
+        HashMap<Character, Character> map = new HashMap<>();
+        int len = s.length();
+        for (int i = 0; i < len; i++) {
+            char key = s.charAt(i);
+            char value = t.charAt(i);
+            if (map.containsKey(key)) {
+                if (!map.get(key).equals(value)) {
+                    return false;
+                }
+            } else {
+                map.put(key, value);
+            }
+        }
+        if (true) {
+            HashMap<Character, Character> map2 = new HashMap<>();
+            int len2 = s.length();
+            for (int i = 0; i < len2; i++) {
+                char key = t.charAt(i);
+                char value = s.charAt(i);
+                if (map2.containsKey(key)) {
+                    if (!map2.get(key).equals(value)) {
+                        return false;
+                    }
+                } else {
+                    map2.put(key, value);
+                }
+            }
+        }
+        return true;
+    }
 
-
-
-
+    public ListNode reverseList(ListNode head) {
+        ListNode pre = null;
+        while (head != null) {
+            ListNode cur_next = head.next;
+            head.next = pre;
+            pre = head;
+            head = cur_next;
+        }
+        return pre;
+    }
 
 
 

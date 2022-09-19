@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Select;
 public interface DemoDao{
 
 
-@Select("select count(*) from d_special_enterprise")
+@Select("select count(*) from d_enterprise_innovation_mark")
     Integer getCount();
-
 }

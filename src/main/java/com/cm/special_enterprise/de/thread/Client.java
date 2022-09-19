@@ -10,7 +10,7 @@ public class Client {
         testEntity.setName("ke");
         testEntity.setSex("2");
         testEntity.setPhone("66666");
-        testEntity.setAge("22");
+        testEntity.setAge(22);
         FileOutputStream fileOutputStream = new FileOutputStream("D:/data.txt");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(testEntity);

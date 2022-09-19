@@ -42,6 +42,8 @@ public class DemoServiceImpl implements DemoService {
     private ElasticsearchRestTemplate elasticsearchRestTemplate;
     @Override
     public Integer getCount() {
+
+
         return demoDao.getCount();
     }
 

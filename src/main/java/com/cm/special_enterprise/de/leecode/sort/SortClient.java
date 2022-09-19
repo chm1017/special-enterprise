@@ -25,6 +25,24 @@ public class SortClient {
         }
     }
 
+
+    public void bubbleSort2(int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            boolean flag = true;
+            for (int j = 0; j < arr.length - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    flag = false;
+                }
+            }
+            if (flag) {
+                break;
+            }
+        }
+    }
+
     public int[] sort(int[] sourceArray) throws Exception {
         int[] arr = Arrays.copyOf(sourceArray, sourceArray.length);
 
