@@ -34,6 +34,7 @@ public class TreeClient {
     }
 
     private static ArrayList<Integer> preList = new ArrayList<>();
+    private static ArrayList<Integer> inorderList = new ArrayList<>();
 
     public static List<Integer> preorderTraversal(TreeNode root) {
         if (root != null) {
@@ -48,6 +49,18 @@ public class TreeClient {
         return preList;
     }
 
+    public static List<Integer> inorderTranversal(TreeNode root) {
+        if (root.left != null) {
+            inorderTranversal(root.left);
+        }
+        if (root != null) {
+            inorderList.add(root.val);
+        }
+        if (root.right != null) {
+            inorderTranversal(root.right);
+        }
+        return inorderList;
+    }
     public static int maxTree(TreeNode root) {
         if (root == null) {
             return 0;
@@ -147,6 +160,26 @@ public class TreeClient {
         if (left==null||right==null) return false;
         if (left.val!= right.val) return false;
         return isEqual(left.left, right.right) && isEqual(left.right, right.left);
+    }
+
+    public boolean isDuichen(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+       return  isXiangdeng(root.left, root.right);
+    }
+
+    public boolean isXiangdeng(TreeNode left, TreeNode right) {
+        if (left == null && right == null) {
+            return true;
+        }
+        if (left == null || right == null) {
+            return false;
+        }
+        if (left.val != right.val) {
+            return false;
+        }
+        return isXiangdeng(left.left, right.right) && isXiangdeng(left.right, right.left);
     }
 
     //是否为平衡二叉树
@@ -338,7 +371,8 @@ public class TreeClient {
             if ((left != null && right == null) || (left == null && right == null)) {//开始都是叶子节点了
                 leafStart = true;
             }
-        }return true;
+        }
+        return true;
     }
     public static boolean  cbt(TreeNode root) {
         if (root == null) {
@@ -368,6 +402,28 @@ public class TreeClient {
             }
         }
         return true;
+    }
+
+
+    public boolean hasPathSum (TreeNode root, int sum) {
+        //空节点找不到路径
+        if(root == null)
+            return false;
+        //叶子节点，且路径和为sum
+        if(root.left == null && root.right == null && sum - root.val == 0)
+            return true;
+        //递归进入子节点
+        return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+    }
+
+    public boolean hasPath(TreeNode root, int sum) {
+        if (root == null) {
+            return false;
+        }
+        if (root.left == null && root.right == null & sum - root.val == 0) {
+            return true;
+        }
+        return hasPath(root.right, sum - root.val) || hasPath(root.right, sum - root.val);
     }
 
 

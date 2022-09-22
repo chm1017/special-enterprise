@@ -140,9 +140,10 @@ public class Test04 implements Runnable{
 
     @Override
     public void run() {
-        for (int i = 0; i < 100; i++) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        HashMap<String, String> reverseMap = new HashMap<>();
+        hashMap.forEach((k, v) -> reverseMap.put(v, k));
 
-        }
 
     }
 }

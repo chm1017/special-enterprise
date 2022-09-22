@@ -46,7 +46,7 @@ public class BeiWangLuMoShi {
     public static void main(String[] args) throws InstantiationException, IllegalAccessException, IntrospectionException, InvocationTargetException {
         TestEntity testEntity = new TestEntity();
         testEntity.setSex("1");
-        testEntity.setAge("age");
+        testEntity.setAge(22);
         testEntity.setName("name");
         testEntity.setPhone("123456");
         HashMap<String, Object> map = backupProp(testEntity);

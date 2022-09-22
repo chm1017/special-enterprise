@@ -42,6 +42,8 @@ public class DemoServiceImpl implements DemoService {
     private ElasticsearchRestTemplate elasticsearchRestTemplate;
     @Override
     public Integer getCount() {
+
+
         return demoDao.getCount();
     }
 
@@ -87,7 +89,6 @@ public class DemoServiceImpl implements DemoService {
                             }
                             demoEntities.add(demoEntity);
                         }
-
                         if (searchHits.getTotalHits() !=0) {
                             searchHits.getSearchHits().forEach(e->{
                                 SpecialEnterprise enterprise1 = specialEnterpriseDao.selectByName(name);

@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DemoEntity {
-    @ExcelProperty(index = 0)
+    @ExcelProperty(value = "公司名称")
     private String name;
-    @ExcelProperty(index = 1)
+    @ExcelProperty(value = "等级")
     private Long level;
 }

@@ -1,6 +1,6 @@
 package com.cm.special_enterprise.de;
 
-import com.alibaba.nacos.common.utils.StringUtils;
+
 import com.cm.special_enterprise.pojo.SimpleDictionaryEntity;
 import com.cm.special_enterprise.pojo.TestEntity;
 
@@ -34,11 +34,8 @@ public class Fanshe {
         strings.add("222");
         strings.add("333");
         strings.add("4444");
-        String join = StringUtils.join(strings, ",");
-        String[] split = join.split(",");
-        TestEntity simpleDictionaryEntity = setParam(TestEntity.class, split);
-        System.out.println(simpleDictionaryEntity.getAge());
-        System.out.println(simpleDictionaryEntity.toString());
+
+   
 
         TestEntity testEntity = new TestEntity();
         Class a = testEntity.getClass();

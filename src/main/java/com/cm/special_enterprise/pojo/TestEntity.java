@@ -1,10 +1,12 @@
 package com.cm.special_enterprise.pojo;
 
-import java.io.Serializable;
+import lombok.Data;
 
+import java.io.Serializable;
+@Data
 public class TestEntity implements Serializable {
     private String name;
-    private String age;
+    private Integer age;
     private String sex;
     private String phone;
 
@@ -16,13 +18,7 @@ public class TestEntity implements Serializable {
         this.name = name;
     }
 
-    public String getAge() {
-        return age;
-    }
 
-    public void setAge(String age) {
-        this.age = age;
-    }
 
     public String getSex() {
         return sex;
