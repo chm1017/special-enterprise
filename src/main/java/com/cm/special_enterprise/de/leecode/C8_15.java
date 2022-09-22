@@ -131,7 +131,7 @@ public class C8_15 {
         }
         int max = 0;
         String target = "";
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < s.length()-1; i++) {
             for (int j = i+1; j < s.length(); j++) {
                 if (isHuiwen(s.substring(i, j)) && s.substring(i, j).length() > max) {
                     max = s.substring(i, j).length();

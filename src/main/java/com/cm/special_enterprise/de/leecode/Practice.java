@@ -6,8 +6,165 @@ import org.apache.coyote.http11.filters.IdentityOutputFilter;
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.*;
+//collection list set   lsit - >vector（线程安全                                           ） arraylist linkedlist;   set -> hashset treeset     map -> hashmap hashtable（线程安全）  treemap
 
 public class Practice {
+    public static void main(String[] args) {
+        HashSet<Integer> set = new HashSet<>();
+        System.out.println(set.add(1));
+        System.out.println(set.add(1));
+        ListNode node1 = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        ListNode node3 = new ListNode(3);
+        ListNode node4 = new ListNode(4);
+        ListNode node5 = new ListNode(5);
+//        node1.next = node3;
+//        node3.next = node5;
+//        node5.next = node4;
+//        node4.next = node2;
+//        node2.next = node3;
+        node1.next = node2;
+        node2.next = node3;
+        node3.next = node4;
+        node4.next = node5;
+        System.out.println(removeNthFromEnd(node1,2));
+
+    }
+
+    public int rob (int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        if (nums.length == 1) {
+            return nums[0];
+        }
+        if (nums.length == 2) {
+            return Math.max(nums[0], nums[1]);
+        }
+        int first = nums[0], second = nums[1];
+        for (int i = 2; i < nums.length; i++) {
+            int temp = second;
+            second = Math.max(nums[i] + first, second);
+            first = temp;
+        }
+        return second;
+    }
+
+        public int[] postorderTraversal (TreeNode root) {
+            //添加遍历结果的数组
+            List<Integer> list = new ArrayList();
+            Stack<TreeNode> s = new Stack<TreeNode>();
+            TreeNode pre = null;
+            while(root != null || !s.isEmpty()){
+                //每次先找到最左边的节点
+                while(root != null){
+                    s.push(root);
+                    root = root.left;
+                }
+                //弹出栈顶
+                TreeNode node = s.pop();
+                //如果该元素的右边没有或是已经访问过
+                if(node.right == null || node.right == pre){
+                    //访问中间的节点
+                    list.add(node.val);
+                    //且记录为访问过了
+                    pre = node;
+                }else{
+                    //该节点入栈
+                    s.push(node);
+                    //先访问右边
+                    root = node.right;
+                }
+            }
+            //返回的结果
+            int[] res = new int[list.size()];
+            for(int i = 0; i < list.size(); i++)
+                res[i] = list.get(i);
+            return res;
+        }
+
+
+
+
+    public int[] inorderTraversal (TreeNode root) {
+            //添加遍历结果的数组
+            List<Integer> list = new ArrayList();
+            Stack<TreeNode> s = new Stack<TreeNode>();
+            //空树返回空数组
+            if(root == null)
+                return new int[0];
+            //当树节点不为空或栈中有节点时
+            while(root != null || !s.isEmpty()){
+                //每次找到最左节点
+                while(root != null){
+                    s.push(root);
+                    root = root.left;
+                }
+                //访问该节点
+                TreeNode node = s.pop();
+                list.add(node.val);
+                //进入右节点
+                root = node.right;
+            }
+            //返回的结果
+            int[] res = new int[list.size()];
+            for(int i = 0; i < list.size(); i++)
+                res[i] = list.get(i);
+            return res;
+        }
+
+
+
+
+        public int[] preorderTraversal2 (TreeNode root) {
+            //添加遍历结果的数组
+            List<Integer> list = new ArrayList();
+            Stack<TreeNode> s = new Stack<TreeNode>();
+            //空树返回空数组
+            if(root == null)
+                return new int[0];
+            //根节点先进栈
+            s.push(root);
+            while(!s.isEmpty()){
+                //每次栈顶就是访问的元素
+                TreeNode node = s.pop();
+                list.add(node.val);
+                //如果右边还有右子节点进栈
+                if(node.right != null)
+                    s.push(node.right);
+                //如果左边还有左子节点进栈
+                if(node.left != null)
+                    s.push(node.left);
+            }
+            //返回的结果
+            int[] res = new int[list.size()];
+            for(int i = 0; i < list.size(); i++)
+                res[i] = list.get(i);
+            return res;
+        }
+
+
+    public int[] preorderTraversal (TreeNode root) {
+        ArrayList<Integer> list = new ArrayList<>();
+        preOrder(list, root);
+        int[] target = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            target[i] = list.get(i);
+        }
+        return target;
+    }
+    public void preOrder(List<Integer> list, TreeNode root) {
+        if (root==null) return;
+        if (root.left!=null) {
+            preOrder(list,root.left);
+        }
+        if (root.right != null) {
+            preOrder(list, root.right);
+        }
+        list.add(root.val);
+    }
+
+
     //平衡二叉树
     public boolean isBalance(TreeNode root) {
         if (root == null) {
@@ -256,24 +413,7 @@ public class Practice {
         return ss;
     }
 
-    public static void main(String[] args) {
-        ListNode node1 = new ListNode(1);
-        ListNode node2 = new ListNode(2);
-        ListNode node3 = new ListNode(3);
-        ListNode node4 = new ListNode(4);
-        ListNode node5 = new ListNode(5);
-//        node1.next = node3;
-//        node3.next = node5;
-//        node5.next = node4;
-//        node4.next = node2;
-//        node2.next = node3;
-        node1.next = node2;
-        node2.next = node3;
-        node3.next = node4;
-        node4.next = node5;
-        System.out.println(removeNthFromEnd(node1,2));
 
-    }
     public class Solution {
         public boolean hasCycle(ListNode head) {
             //先判断链表为空的情况

@@ -162,6 +162,26 @@ public class TreeClient {
         return isEqual(left.left, right.right) && isEqual(left.right, right.left);
     }
 
+    public boolean isDuichen(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+       return  isXiangdeng(root.left, root.right);
+    }
+
+    public boolean isXiangdeng(TreeNode left, TreeNode right) {
+        if (left == null && right == null) {
+            return true;
+        }
+        if (left == null || right == null) {
+            return false;
+        }
+        if (left.val != right.val) {
+            return false;
+        }
+        return isXiangdeng(left.left, right.right) && isXiangdeng(left.right, right.left);
+    }
+
     //是否为平衡二叉树
     public boolean isBalenceTree(TreeNode root) {
         if (root == null) {

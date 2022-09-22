@@ -8,6 +8,8 @@ public class SortClient {
     public static void main(String[] args) {
 
     }
+
+//    冒泡排序
     public void  bubbleSort(int[] arr) {
         for (int i = 1; i < arr.length; i++) {
             boolean flag = true;

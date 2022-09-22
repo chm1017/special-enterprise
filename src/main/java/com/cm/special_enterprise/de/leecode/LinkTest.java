@@ -4,24 +4,44 @@ import cn.hutool.core.net.Ipv4Util;
 import com.alibaba.druid.sql.visitor.functions.Char;
 import com.cm.special_enterprise.de.Test01;
 import com.cm.special_enterprise.de.leecode.ListNode;
+import org.checkerframework.checker.units.qual.A;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 
 public class LinkTest {
     public static void main(String[] args) {
-        ListNode head = new ListNode(0);
-        ListNode node1 = new ListNode(1);
-        ListNode node2 = new ListNode(2);
-        ListNode node3 = new ListNode(2);
-        ListNode node4 = new ListNode(4);
+        ListNode head = new ListNode(1);
+        ListNode node1 = new ListNode(2);
+        ListNode node2 = new ListNode(3);
+        ListNode node3 = new ListNode(4);
+        ListNode node4 = new ListNode(5);
         head.next = node1;
         node1.next = node2;
         node2.next = node3;
         node3.next = node4;
-//        System.out.println(reverseBetween(head, 2, 3));
+        System.out.println(reverseBetween2(head, 1, 4));
 //        System.out.println(delNode(head, 6));
-        System.out.println(removeElements(head, 2));
+//        System.out.println(removeElements(head, 2));
 
+    }
+
+    public static ListNode reverseBetween2 (ListNode head, int m, int n) {
+        ListNode dummyNode = new ListNode();
+        dummyNode.next = head;
+        ListNode pre = dummyNode;
+        for (int i = 0; i < m-1; i++) {
+            pre = pre.next;
+        }
+        ListNode cur = pre.next;
+        ListNode cur_next ;
+        for (int i = 0; i < n - m; i++) {
+            cur_next = cur.next;
+            cur.next = cur_next.next;
+            cur_next.next = pre.next;
+            pre.next = cur_next;
+        }
+        return dummyNode.next;
     }
 
     public static ListNode removeElements(ListNode head, int val) {
@@ -268,7 +288,258 @@ public class LinkTest {
         return pre;
     }
 
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        HashMap<Integer, Integer> inDegree = new HashMap<>(); // 课号 和 对应的入度
+        for (int i = 0; i < numCourses; i++) {
+            inDegree.put(i, 0);
+        }
+        HashMap<Integer, List<Integer>> adj = new HashMap<>();//邻接表    依赖当前课程的后续课程
+        for (int[] prerequisite : prerequisites) {
+            int next = prerequisite[0];
+            int cur = prerequisite[1];
+            inDegree.put(next,inDegree.get(next) + 1);
+            if (!adj.containsKey(cur)) {
+                adj.put(cur, new ArrayList<Integer>());
+            }
+            adj.get(cur).add(next);
+        }
+        Queue<Integer> q = new LinkedList<>();
+        for (Integer key : inDegree.keySet()) {
+            if (inDegree.get(key) == 0) {
+                q.offer(key);
+            }
+        }
+        while (!q.isEmpty()) {
+            Integer cur = q.poll();
+            if (!adj.containsKey(cur)) {
+                continue;
+            }
+            List<Integer> successorList = adj.get(cur);
+            for (Integer k : successorList) {
+                inDegree.put(k, inDegree.get(k - 1));
+                if (inDegree.get(k) == 0) {
+                    q.offer(k);
+                }
+            }
+        }
+        for (Integer key : inDegree.keySet()) {
+            if (inDegree.get(key) != 0) {
+                return false;
+            }
+        }
+        return true;
 
 
+    }
+
+    public boolean canSuccess(int numCourses, int[][] prerequisites){
+        HashMap<Integer, Integer> inDegree = new HashMap<>();
+        for (int i = 0; i < numCourses; i++) {
+            inDegree.put(i, 0);
+        }
+//        链接表
+        HashMap<Integer, List<Integer>> jds = new HashMap<>();
+        for (int[] prerequisite : prerequisites) {
+            int next = prerequisite[0];
+            int cur = prerequisite[1];
+            inDegree.put(next, inDegree.get(next) + 1);
+            if (!jds.containsKey(cur)) {
+                jds.put(cur, new ArrayList<Integer>());
+            }
+            jds.get(cur).add(next);
+        }
+//        选取入度为0 的节点  入队列
+        Queue<Integer> q = new LinkedList<>();
+        for (Integer key : inDegree.keySet()) {
+            if (inDegree.get(key) == 0) {
+                q.offer(key);
+            }
+        }
+        while (!q.isEmpty()) {
+            Integer cur = q.poll();
+            if (!jds.containsKey(cur)) {
+                continue;
+            }
+            List<Integer> Sussessor = jds.get(cur);
+            for (Integer key : Sussessor) {
+                inDegree.put(key, inDegree.get(key) - 1);
+                if (inDegree.get(key) == 0) {
+                    q.offer(key);
+                }
+            }
+        }
+        for (Integer key : inDegree.keySet()) {
+            if (inDegree.get(key) != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        HashMap<Integer, Integer> inDegree = new HashMap<>();
+        for (int i = 0; i < numCourses; i++) {
+            inDegree.put(i, 0);
+        }
+//        链接表
+        HashMap<Integer, List<Integer>> jds = new HashMap<>();
+        for (int[] prerequisite : prerequisites) {
+            int next = prerequisite[0];
+            int cur = prerequisite[1];
+            inDegree.put(next, inDegree.get(next) + 1);
+            if (!jds.containsKey(cur)) {
+                jds.put(cur, new ArrayList<Integer>());
+            }
+            jds.get(cur).add(next);
+        }
+        Queue<Integer> q = new LinkedList<>();
+        List<Integer> target = new ArrayList<Integer>();
+
+        for (Integer key : inDegree.keySet()) {
+            if (inDegree.get(key) == 0) {
+                q.offer(key);
+                target.add(key);
+            }
+        }
+        while (!q.isEmpty()) {
+            Integer cur = q.poll();
+            if (!jds.containsKey(cur)) {
+                continue;
+            }
+            List<Integer> Sussessor = jds.get(cur);
+            for (Integer key : Sussessor) {
+                inDegree.put(key, inDegree.get(key) - 1);
+                if (inDegree.get(key) == 0) {
+                    q.offer(key);
+                    target.add(key);
+                }
+            }
+        }
+
+
+
+        int[] i = new int[numCourses];
+        for (int j = 0; j < target.size(); j++) {
+            i[j] = target.get(j);
+        }
+        return i;
+    }
+
+    static class Trie {
+         private  ArrayList<String> list;
+
+
+        public Trie() {
+            this.list = new ArrayList<>();
+        }
+
+        public void insert(String word) {
+            list.add(word);
+        }
+
+        public boolean search(String word) {
+            for (String s : list) {
+                if (word.equals(s)) {
+                     return  true;
+                }
+            }
+            return false;
+        }
+
+        public boolean startsWith(String prefix) {
+            for (String s : list) {
+                if (s.startsWith(prefix)) {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+    }
+    public int rob(int[] nums) {
+        int len = nums.length;
+        if (nums==null&&len == 0) {
+            return 0;
+        }
+        if (len == 1) {
+            return nums[0];
+        }
+        int first = nums[0];
+        int second = Math.max(first, nums[1]);
+        for (int i = 2; i < len; i++) {
+            int temp = second;
+            second = Math.max(first + nums[i], second);
+            first = temp;
+        }
+        return second;
+    }
+
+    public int getMaxRob(int[] nums) {
+        int len = nums.length;
+        if (nums == null && nums.length == 0) {
+            return 0;
+        }
+        if (nums.length == 1) {
+            return nums[0];
+        } else if (nums.length == 2) {
+            return Math.max(nums[0], nums[1]);
+        }
+        return Math.max(rob(nums, 0, len - 2), rob(nums, 1, len - 1));
+    }
+
+
+
+    public int rob(int[] nums, int start, int end) {
+        int first = nums[start];
+        int second = Math.max(nums[start + 1],first);
+        for (int i = start+2; i <= end; i++) {
+            int temp = second;
+            second = Math.max(nums[i] + first, second);
+            first = temp;
+        }
+        return second;
+    }
+
+    public String shortestPalindrome(String s) {
+        StringBuilder b = new StringBuilder(s);
+        StringBuilder reverse = b.reverse();
+        int length = reverse.length();
+
+        return "";
+        
+    }
+
+
+    public int lengthOfLongestSubstring(String s) {
+
+        return 0;
+
+    }
+    public boolean isHuiWen(String s) {
+        if (s.equals(new StringBuilder(s).reverse())) {
+            return true;
+        }
+        return false;
+    }
+
+
+
+    public int climbStairs(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        if (n == 1) {
+            return 1;
+        } else if (n == 2) {
+            return 2;
+        }
+        int first = 1;
+        int second = 2;
+        for (int i = 3; i <=n ; i++) {
+            int temp = second;
+            second = second + first;
+            first = temp;
+        }
+        return second;
+    }
 
 }
