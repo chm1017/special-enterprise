@@ -13,7 +13,11 @@ import java.util.List;
 @Document(indexName = "liaoning_enterprise_index2", createIndex = true, useServerConfiguration = true)
 
 @Data
-public class EnterpriseBaseIndex extends BaseMapping {
+public class
+
+
+
+EnterpriseBaseIndex extends BaseMapping {
 
     /**
      * 企业名,同时支持模糊和精确查询
