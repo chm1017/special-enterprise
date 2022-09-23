@@ -8,13 +8,13 @@ public class SaiPao implements Runnable {
         for (int i = 0; i <= 100; i++) {
             if (Thread.currentThread().getName().equals("乌龟") && i % 10 == 0) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }if (Thread.currentThread().getName().equals("兔子") && i % 10 == 0) {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

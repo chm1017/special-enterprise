@@ -1,7 +1,7 @@
 package com.cm.special_enterprise.de.thread;
 
 public class QiangPiao implements Runnable {
-    private Integer totalTicket = 500;
+    private Integer totalTicket = 10;
     private Boolean flag = true;
 
     @Override

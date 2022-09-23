@@ -20,6 +20,8 @@ public class Client {
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         TestEntity o = (TestEntity)objectInputStream.readObject();
         System.out.println(o.toString());
+        DemoRunnable demoRunnable = new DemoRunnable();
+
 
 
     }

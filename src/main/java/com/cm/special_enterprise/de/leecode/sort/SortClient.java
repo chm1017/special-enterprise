@@ -44,10 +44,9 @@ public class SortClient {
             }
         }
     }
-
+//  选择排序
     public int[] sort(int[] sourceArray) throws Exception {
         int[] arr = Arrays.copyOf(sourceArray, sourceArray.length);
-
         // 总共要经过 N-1 轮比较
         for (int i = 0; i < arr.length - 1; i++) {
             int min = i;
@@ -59,7 +58,6 @@ public class SortClient {
                     min = j;
                 }
             }
-
             // 将找到的最小值和i位置所在的值进行交换
             if (i != min) {
                 int tmp = arr[i];
@@ -69,6 +67,20 @@ public class SortClient {
 
         }
         return arr;
+    }
+//  二分查找
+    public int search (int[] nums, int target) {
+        int len = nums.length;
+        int low = 0;
+        int max = len-1;
+        int mid = 0;
+        while (low <= max) {
+            mid = (low + max) / 2;
+            if (nums[mid]==target) return mid;
+            else if (nums[mid]>target) max = mid-1;
+            else low = mid + 1;
+        }
+        return -1;
     }
 
 
@@ -109,6 +121,22 @@ public class SortClient {
         arr[j] = temp;
     }
 
+    public boolean Find(int target, int [][] array) {
+        int w = array.length;
+        int h = array[0].length;
+        int i = 0;
+        int j = h-1;
+        while (i < w && j >= 0) {
+            if (target > array[i][j]) {
+                i++;
+            } else if (target < array[i][j]) {
+                j--;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
 

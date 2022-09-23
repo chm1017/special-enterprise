@@ -15,8 +15,6 @@ public class DemoCallable implements Callable<Boolean> {
         this.url = url;
         this.name = name;
     }
-
-
     @Override
     public Boolean call() throws Exception {
         DownLoadService downLoadService = new DownLoadService();

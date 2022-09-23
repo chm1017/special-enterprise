@@ -21,6 +21,9 @@ public class LinkTest {
         node2.next = node3;
         node3.next = node4;
         System.out.println(reverseBetween2(head, 1, 4));
+
+        String s = "01";
+        System.out.println(Integer.valueOf(s));
 //        System.out.println(delNode(head, 6));
 //        System.out.println(removeElements(head, 2));
 
